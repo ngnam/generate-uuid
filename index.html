@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Generate UUID Online</title>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+</head>
+<body class="pt-5">
+
+    <div id="result" class="container">
+        <div class="row">
+            <div class="col-6 offset-3 center">
+                <form>
+                    <div class="form-group">
+                        <label for="text-uuidv4">Chuỗi UUID v4</label>
+                        <div class="input-group mb-3">
+                            <input type="text" id="text-uuidv4" class="form-control" aria-describedby="text-uuidv4Inline" placeholder="UUID v4" readonly="readonly">
+                            <div class="input-group-append">
+                                <button class="input-group-text btn btn-outline-secondary" id="text-uuidv4-addon2" type="button" data-toggle="tooltip" data-placement="bottom" title="Copy to Clipboard">Copy text</button>
+                            </div>
+                        </div>
+                       
+                        <small id="text-uuidv4Inline" class="text-muted">
+                            String generate UUID
+                        </small>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="btn-generate">Generate</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(function () {
+                $('#text-uuidv4-addon2').tooltip();
+                $('#text-uuidv4-addon2').on('hidden.bs.tooltip', function () {
+                    $(this).attr('data-original-title', 'Copy to Clipboard');
+                })
+            });
+            $('#text-uuidv4').val(uuidv4());
+            $('#btn-generate').off('click').on('click', function () {
+                $('#text-uuidv4').val(uuidv4());
+            });
+
+            $('#text-uuidv4-addon2').off('click').on('click', function () {
+                var copytext = myCopyToClipboard();
+                console.log($(this))
+                $(this).tooltip('hide').attr('data-original-title', 'Copied: ' + copytext).tooltip({ delay: { "show": 500, "hide": 1000 }}).tooltip('show');
+            });
+        })
+
+        function uuidv4() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        function myCopyToClipboard() {
+            var copyText = document.getElementById("text-uuidv4");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999)
+            document.execCommand("copy");
+            return copyText.value;
+        }
+
+        //document.getElementById('result').innerHTML = uuidv4();
+
+    </script>
+
+</body>
+</html>
